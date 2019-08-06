@@ -56,7 +56,7 @@ class RadarChartPainter extends CustomPainter {
         textDirection: TextDirection.ltr,
       )
         ..layout(minWidth: 0, maxWidth: size.width)
-        ..paint(canvas, Offset(centerX, centerY + tickRadius));
+        ..paint(canvas, Offset(centerX, centerY - tickRadius - 12));
     });
 
     canvas.drawCircle(Offset(centerX, centerY), radius, polarPaint);
