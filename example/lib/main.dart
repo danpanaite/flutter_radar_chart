@@ -21,12 +21,14 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const ticks = [10, 20, 30];
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Radar Chart Example'),
       ),
       body: Center(
-        child: RadarChart(),
+        child: RadarChart(ticks: ticks),
       ),
     );
   }
