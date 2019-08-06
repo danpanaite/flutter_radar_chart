@@ -34,18 +34,30 @@ class RadarChartPainter extends CustomPainter {
     ..strokeWidth = 1.0
     ..isAntiAlias = true;
 
+  var ticksTextStyle = TextStyle(color: Colors.grey, fontSize: 12);
+
   RadarChartPainter(this.ticks);
 
   @override
   void paint(Canvas canvas, Size size) {
-    double centerX = size.width / 2.0;
-    double centerY = size.height / 2.0;
-    double radius = centerX * 0.8;
+    var centerX = size.width / 2.0;
+    var centerY = size.height / 2.0;
+    var radius = centerX * 0.8;
 
-    double tickRadius = radius / (ticks.length + 1);
+    var tickDistance = radius / (ticks.length + 1);
 
-    ticks.asMap().forEach((index, tick) => canvas.drawCircle(
-        Offset(centerX, centerY), tickRadius * (index + 1), ticksPaint));
+    ticks.asMap().forEach((index, tick) {
+      var tickRadius = tickDistance * (index + 1);
+
+      canvas.drawCircle(Offset(centerX, centerY), tickRadius, ticksPaint);
+
+      TextPainter(
+        text: TextSpan(text: tick.toString(), style: ticksTextStyle),
+        textDirection: TextDirection.ltr,
+      )
+        ..layout(minWidth: 0, maxWidth: size.width)
+        ..paint(canvas, Offset(centerX, centerY + tickRadius));
+    });
 
     canvas.drawCircle(Offset(centerX, centerY), radius, polarPaint);
   }
