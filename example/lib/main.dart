@@ -22,13 +22,17 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const ticks = [10, 20, 30];
+    const features = ["A", "B", "C", "D", "E", "F", "G"];
 
     return Scaffold(
       appBar: AppBar(
         title: Text('Radar Chart Example'),
       ),
       body: Center(
-        child: RadarChart(ticks: ticks),
+        child: RadarChart(
+          ticks: ticks,
+          features: features,
+        ),
       ),
     );
   }
