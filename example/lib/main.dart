@@ -24,7 +24,8 @@ class MyHomePage extends StatelessWidget {
     const ticks = [7, 14, 21, 28, 35];
     const features = ["AA", "BB", "CC", "DD", "EE", "FF", "GG", "HH"];
     const data = [
-      [10, 20, 28, 5, 16, 15, 17, 6]
+      [10, 20, 28, 5, 16, 15, 17, 6],
+      [15, 1, 4, 14, 23, 10, 6, 19]
     ];
 
     return Scaffold(

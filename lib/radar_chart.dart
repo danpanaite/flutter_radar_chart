@@ -36,6 +36,8 @@ class RadarChartPainter extends CustomPainter {
 
   RadarChartPainter(this.ticks, this.features, this.data, this.reverseAxis);
 
+  var graphColors = [Colors.green, Colors.red, Colors.blue, Colors.orange];
+
   var polarPaint = Paint()
     ..color = Colors.black
     ..style = PaintingStyle.stroke
@@ -46,16 +48,6 @@ class RadarChartPainter extends CustomPainter {
     ..color = Colors.grey
     ..style = PaintingStyle.stroke
     ..strokeWidth = 1.0
-    ..isAntiAlias = true;
-
-  var graphPaint = Paint()
-    ..color = Colors.green.withOpacity(0.4)
-    ..style = PaintingStyle.fill;
-
-  var graphOutlinePaint = Paint()
-    ..color = Colors.green
-    ..style = PaintingStyle.stroke
-    ..strokeWidth = 2.0
     ..isAntiAlias = true;
 
   var ticksTextStyle = TextStyle(color: Colors.grey, fontSize: 12);
@@ -116,7 +108,17 @@ class RadarChartPainter extends CustomPainter {
                 featureOffset.dy + labelYOffset));
     });
 
-    data.forEach((graph) {
+    data.asMap().forEach((index, graph) {
+      var graphPaint = Paint()
+        ..color = graphColors[index % graphColors.length].withOpacity(0.4)
+        ..style = PaintingStyle.fill;
+
+      var graphOutlinePaint = Paint()
+        ..color = graphColors[index % graphColors.length]
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2.0
+        ..isAntiAlias = true;
+
       // Start the graph on the initial point
       var scaledPoint = scale * graph[0];
       var path = Path();
