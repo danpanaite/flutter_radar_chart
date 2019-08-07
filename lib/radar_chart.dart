@@ -10,6 +10,8 @@ class RadarChart extends StatelessWidget {
   final List<String> features;
   final List<List<int>> data;
   final bool reverseAxis;
+  final TextStyle ticksTextStyle;
+  final TextStyle featuresTextStyle;
 
   const RadarChart({
     Key key,
@@ -17,13 +19,22 @@ class RadarChart extends StatelessWidget {
     @required this.features,
     @required this.data,
     this.reverseAxis = false,
+    this.ticksTextStyle = const TextStyle(color: Colors.grey, fontSize: 12),
+    this.featuresTextStyle = const TextStyle(color: Colors.black, fontSize: 16),
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
       size: Size(double.infinity, double.infinity),
-      painter: RadarChartPainter(ticks, features, data, reverseAxis),
+      painter: RadarChartPainter(
+        ticks,
+        features,
+        data,
+        reverseAxis,
+        ticksTextStyle,
+        featuresTextStyle,
+      ),
     );
   }
 }
@@ -33,8 +44,17 @@ class RadarChartPainter extends CustomPainter {
   final List<String> features;
   final List<List<int>> data;
   final bool reverseAxis;
+  final TextStyle ticksTextStyle;
+  final TextStyle featuresTextStyle;
 
-  RadarChartPainter(this.ticks, this.features, this.data, this.reverseAxis);
+  RadarChartPainter(
+    this.ticks,
+    this.features,
+    this.data,
+    this.reverseAxis,
+    this.ticksTextStyle,
+    this.featuresTextStyle,
+  );
 
   var graphColors = [Colors.green, Colors.red, Colors.blue, Colors.orange];
 
@@ -49,9 +69,6 @@ class RadarChartPainter extends CustomPainter {
     ..style = PaintingStyle.stroke
     ..strokeWidth = 1.0
     ..isAntiAlias = true;
-
-  var ticksTextStyle = TextStyle(color: Colors.grey, fontSize: 12);
-  var featuresTextStyle = TextStyle(color: Colors.black, fontSize: 16);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -109,6 +126,7 @@ class RadarChartPainter extends CustomPainter {
                 featureOffset.dy + labelYOffset));
     });
 
+    // Painting each graph
     data.asMap().forEach((index, graph) {
       var graphPaint = Paint()
         ..color = graphColors[index % graphColors.length].withOpacity(0.3)
