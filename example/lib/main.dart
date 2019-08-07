@@ -22,7 +22,7 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const ticks = [10, 20, 30];
-    const features = ["A", "B", "C", "D", "E", "F", "G"];
+    const features = ["AA", "BB", "CC", "DD", "EE", "FF", "GG", "HH"];
 
     return Scaffold(
       appBar: AppBar(

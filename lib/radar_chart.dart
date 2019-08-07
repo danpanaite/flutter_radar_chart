@@ -39,6 +39,7 @@ class RadarChartPainter extends CustomPainter {
     ..isAntiAlias = true;
 
   var ticksTextStyle = TextStyle(color: Colors.grey, fontSize: 12);
+  var featuresTextStyle = TextStyle(color: Colors.black, fontSize: 16);
 
   RadarChartPainter(this.ticks, this.features);
 
@@ -72,10 +73,26 @@ class RadarChartPainter extends CustomPainter {
     var angle = (2 * pi) / features.length;
 
     features.asMap().forEach((index, feature) {
-      var featureOffset = Offset(centerX + radius * cos(angle * index - pi / 2),
-          centerY + radius * sin(angle * index - pi / 2));
+      var xAngle = cos(angle * index - pi / 2);
+      var yAngle = sin(angle * index - pi / 2);
+
+      var featureOffset =
+          Offset(centerX + radius * xAngle, centerY + radius * yAngle);
 
       canvas.drawLine(centerOffset, featureOffset, ticksPaint);
+
+      var labelYOffset = yAngle < 0 ? -20 : 0;
+      var labelXOffset = xAngle < 0 ? -20 : 0;
+
+      TextPainter(
+        text: TextSpan(text: feature, style: featuresTextStyle),
+        textDirection: TextDirection.ltr,
+      )
+        ..layout(minWidth: 0, maxWidth: size.width)
+        ..paint(
+            canvas,
+            Offset(featureOffset.dx + labelXOffset,
+                featureOffset.dy + labelYOffset));
     });
   }
 
