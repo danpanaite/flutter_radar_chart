@@ -66,7 +66,7 @@ class RadarChartPainter extends CustomPainter {
     this.axisColor,
   );
 
-  var graphColors = [Colors.green, Colors.red, Colors.blue, Colors.orange];
+  var graphColors = [Colors.green, Colors.blue, Colors.red, Colors.orange];
 
   @override
   void paint(Canvas canvas, Size size) {
