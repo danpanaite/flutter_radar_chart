@@ -23,6 +23,9 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     const ticks = [10, 20, 30];
     const features = ["AA", "BB", "CC", "DD", "EE", "FF", "GG", "HH"];
+    const data = [
+      [10, 20, 28, 5, 8, 15, 17, 6]
+    ];
 
     return Scaffold(
       appBar: AppBar(
@@ -32,6 +35,7 @@ class MyHomePage extends StatelessWidget {
         child: RadarChart(
           ticks: ticks,
           features: features,
+          data: data,
         ),
       ),
     );

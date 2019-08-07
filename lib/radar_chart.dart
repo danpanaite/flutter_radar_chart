@@ -8,18 +8,20 @@ import 'dart:math' show pi, cos, sin;
 class RadarChart extends StatelessWidget {
   final List<int> ticks;
   final List<String> features;
+  final List<List<int>> data;
 
   const RadarChart({
     Key key,
     @required this.ticks,
     @required this.features,
+    @required this.data,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
       size: Size(double.infinity, double.infinity),
-      painter: RadarChartPainter(ticks, features),
+      painter: RadarChartPainter(ticks, features, data),
     );
   }
 }
@@ -27,6 +29,7 @@ class RadarChart extends StatelessWidget {
 class RadarChartPainter extends CustomPainter {
   final List<int> ticks;
   final List<String> features;
+  final List<List<int>> data;
 
   var polarPaint = Paint()
     ..color = Colors.black
@@ -41,11 +44,11 @@ class RadarChartPainter extends CustomPainter {
     ..isAntiAlias = true;
 
   var graphPaint = Paint()
-    ..color = Colors.green.withOpacity(0.5)
+    ..color = Colors.green.withOpacity(0.4)
     ..style = PaintingStyle.fill;
 
   var graphOutlinePaint = Paint()
-    ..color = Colors.green.withOpacity(0.5)
+    ..color = Colors.green
     ..style = PaintingStyle.stroke
     ..strokeWidth = 2.0
     ..isAntiAlias = true;
@@ -53,7 +56,7 @@ class RadarChartPainter extends CustomPainter {
   var ticksTextStyle = TextStyle(color: Colors.grey, fontSize: 12);
   var featuresTextStyle = TextStyle(color: Colors.black, fontSize: 16);
 
-  RadarChartPainter(this.ticks, this.features);
+  RadarChartPainter(this.ticks, this.features, this.data);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -61,6 +64,7 @@ class RadarChartPainter extends CustomPainter {
     var centerY = size.height / 2.0;
     var centerOffset = Offset(centerX, centerY);
     var radius = centerX * 0.8;
+    var scale = radius / ticks.last;
 
     // Painting the chart outline
     canvas.drawCircle(centerOffset, radius, polarPaint);
@@ -107,17 +111,26 @@ class RadarChartPainter extends CustomPainter {
                 featureOffset.dy + labelYOffset));
     });
 
-    // Painting each graph
-    // canvas.drawRawPoints(PointMode.polygon, points, paint)
-    var path = Path()
-      ..moveTo(centerX, centerY)
-      ..lineTo(centerX, centerY + radius)
-      ..lineTo(centerX - radius, centerY)
-      ..lineTo(centerX, centerY)
-      ..close();
+    data.forEach((graph) {
+      // Start the graph on the initial point
+      var scaledPoint = scale * graph[0];
+      var path = Path()..moveTo(centerX, centerY - scaledPoint);
 
-    canvas.drawPath(path, graphPaint);
-    canvas.drawPath(path, graphOutlinePaint);
+      graph.asMap().forEach((index, point) {
+        if (index == 0) return;
+
+        var xAngle = cos(angle * index - pi / 2);
+        var yAngle = sin(angle * index - pi / 2);
+        var scaledPoint = scale * point;
+
+        path.lineTo(
+            centerX + scaledPoint * xAngle, centerY + scaledPoint * yAngle);
+      });
+
+      path.close();
+      canvas.drawPath(path, graphPaint);
+      canvas.drawPath(path, graphOutlinePaint);
+    });
   }
 
   @override
