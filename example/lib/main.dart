@@ -36,6 +36,7 @@ class MyHomePage extends StatelessWidget {
           ticks: ticks,
           features: features,
           data: data,
+          reverseAxis: true,
         ),
       ),
     );

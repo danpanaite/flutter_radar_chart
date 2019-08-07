@@ -9,19 +9,21 @@ class RadarChart extends StatelessWidget {
   final List<int> ticks;
   final List<String> features;
   final List<List<int>> data;
+  final bool reverseAxis;
 
   const RadarChart({
     Key key,
     @required this.ticks,
     @required this.features,
     @required this.data,
+    this.reverseAxis = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
       size: Size(double.infinity, double.infinity),
-      painter: RadarChartPainter(ticks, features, data),
+      painter: RadarChartPainter(ticks, features, data, reverseAxis),
     );
   }
 }
@@ -30,6 +32,9 @@ class RadarChartPainter extends CustomPainter {
   final List<int> ticks;
   final List<String> features;
   final List<List<int>> data;
+  final bool reverseAxis;
+
+  RadarChartPainter(this.ticks, this.features, this.data, this.reverseAxis);
 
   var polarPaint = Paint()
     ..color = Colors.black
@@ -56,8 +61,6 @@ class RadarChartPainter extends CustomPainter {
   var ticksTextStyle = TextStyle(color: Colors.grey, fontSize: 12);
   var featuresTextStyle = TextStyle(color: Colors.black, fontSize: 16);
 
-  RadarChartPainter(this.ticks, this.features, this.data);
-
   @override
   void paint(Canvas canvas, Size size) {
     var centerX = size.width / 2.0;
@@ -72,8 +75,9 @@ class RadarChartPainter extends CustomPainter {
     // Painting the circles and labels for the given ticks (could be auto-generated)
     // The last tick is ignored, since it overlaps with the feature label
     var tickDistance = radius / (ticks.length);
+    var tickLabels = reverseAxis ? ticks.reversed.toList() : ticks;
 
-    ticks.sublist(0, ticks.length - 1).asMap().forEach((index, tick) {
+    tickLabels.sublist(0, ticks.length - 1).asMap().forEach((index, tick) {
       var tickRadius = tickDistance * (index + 1);
 
       canvas.drawCircle(centerOffset, tickRadius, ticksPaint);
@@ -115,7 +119,13 @@ class RadarChartPainter extends CustomPainter {
     data.forEach((graph) {
       // Start the graph on the initial point
       var scaledPoint = scale * graph[0];
-      var path = Path()..moveTo(centerX, centerY - scaledPoint);
+      var path = Path();
+
+      if (reverseAxis) {
+        path.moveTo(centerX, centerY - (radius - scaledPoint));
+      } else {
+        path.moveTo(centerX, centerY - scaledPoint);
+      }
 
       graph.asMap().forEach((index, point) {
         if (index == 0) return;
@@ -124,8 +134,13 @@ class RadarChartPainter extends CustomPainter {
         var yAngle = sin(angle * index - pi / 2);
         var scaledPoint = scale * point;
 
-        path.lineTo(
-            centerX + scaledPoint * xAngle, centerY + scaledPoint * yAngle);
+        if (reverseAxis) {
+          path.lineTo(centerX + (radius - scaledPoint) * xAngle,
+              centerY + (radius - scaledPoint) * yAngle);
+        } else {
+          path.lineTo(
+              centerX + scaledPoint * xAngle, centerY + scaledPoint * yAngle);
+        }
       });
 
       path.close();
