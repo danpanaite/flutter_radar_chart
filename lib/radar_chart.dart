@@ -12,6 +12,8 @@ class RadarChart extends StatelessWidget {
   final bool reverseAxis;
   final TextStyle ticksTextStyle;
   final TextStyle featuresTextStyle;
+  final Color outlineColor;
+  final Color axisColor;
 
   const RadarChart({
     Key key,
@@ -21,6 +23,8 @@ class RadarChart extends StatelessWidget {
     this.reverseAxis = false,
     this.ticksTextStyle = const TextStyle(color: Colors.grey, fontSize: 12),
     this.featuresTextStyle = const TextStyle(color: Colors.black, fontSize: 16),
+    this.outlineColor = Colors.black,
+    this.axisColor = Colors.grey,
   }) : super(key: key);
 
   @override
@@ -34,6 +38,8 @@ class RadarChart extends StatelessWidget {
         reverseAxis,
         ticksTextStyle,
         featuresTextStyle,
+        outlineColor,
+        axisColor,
       ),
     );
   }
@@ -46,6 +52,8 @@ class RadarChartPainter extends CustomPainter {
   final bool reverseAxis;
   final TextStyle ticksTextStyle;
   final TextStyle featuresTextStyle;
+  final Color outlineColor;
+  final Color axisColor;
 
   RadarChartPainter(
     this.ticks,
@@ -54,21 +62,11 @@ class RadarChartPainter extends CustomPainter {
     this.reverseAxis,
     this.ticksTextStyle,
     this.featuresTextStyle,
+    this.outlineColor,
+    this.axisColor,
   );
 
   var graphColors = [Colors.green, Colors.red, Colors.blue, Colors.orange];
-
-  var polarPaint = Paint()
-    ..color = Colors.black
-    ..style = PaintingStyle.stroke
-    ..strokeWidth = 2.0
-    ..isAntiAlias = true;
-
-  var ticksPaint = Paint()
-    ..color = Colors.grey
-    ..style = PaintingStyle.stroke
-    ..strokeWidth = 1.0
-    ..isAntiAlias = true;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -79,6 +77,18 @@ class RadarChartPainter extends CustomPainter {
     var scale = radius / ticks.last;
 
     // Painting the chart outline
+    var polarPaint = Paint()
+      ..color = outlineColor
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2.0
+      ..isAntiAlias = true;
+
+    var ticksPaint = Paint()
+      ..color = axisColor
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.0
+      ..isAntiAlias = true;
+
     canvas.drawCircle(centerOffset, radius, polarPaint);
 
     // Painting the circles and labels for the given ticks (could be auto-generated)
@@ -96,7 +106,7 @@ class RadarChartPainter extends CustomPainter {
         textDirection: TextDirection.ltr,
       )
         ..layout(minWidth: 0, maxWidth: size.width)
-        ..paint(canvas, Offset(centerX, centerY - tickRadius - 12));
+        ..paint(canvas, Offset(centerX, centerY - tickRadius - ticksTextStyle.fontSize));
     });
 
     // Painting the axis for each given feature
