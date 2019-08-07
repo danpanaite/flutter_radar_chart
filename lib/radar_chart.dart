@@ -1,5 +1,7 @@
 library radar_chart;
 
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'dart:math' show pi, cos, sin;
 
@@ -36,6 +38,16 @@ class RadarChartPainter extends CustomPainter {
     ..color = Colors.grey
     ..style = PaintingStyle.stroke
     ..strokeWidth = 1.0
+    ..isAntiAlias = true;
+
+  var graphPaint = Paint()
+    ..color = Colors.green.withOpacity(0.5)
+    ..style = PaintingStyle.fill;
+
+  var graphOutlinePaint = Paint()
+    ..color = Colors.green.withOpacity(0.5)
+    ..style = PaintingStyle.stroke
+    ..strokeWidth = 2.0
     ..isAntiAlias = true;
 
   var ticksTextStyle = TextStyle(color: Colors.grey, fontSize: 12);
@@ -94,6 +106,18 @@ class RadarChartPainter extends CustomPainter {
             Offset(featureOffset.dx + labelXOffset,
                 featureOffset.dy + labelYOffset));
     });
+
+    // Painting each graph
+    // canvas.drawRawPoints(PointMode.polygon, points, paint)
+    var path = Path()
+      ..moveTo(centerX, centerY)
+      ..lineTo(centerX, centerY + radius)
+      ..lineTo(centerX - radius, centerY)
+      ..lineTo(centerX, centerY)
+      ..close();
+
+    canvas.drawPath(path, graphPaint);
+    canvas.drawPath(path, graphOutlinePaint);
   }
 
   @override
