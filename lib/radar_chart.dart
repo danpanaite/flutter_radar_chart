@@ -95,10 +95,11 @@ class RadarChartPainter extends CustomPainter {
       canvas.drawLine(centerOffset, featureOffset, ticksPaint);
 
       var labelYOffset = yAngle < 0 ? -20 : 0;
-      var labelXOffset = xAngle < 0 ? -20 : 0;
+      var labelXOffset = xAngle < 0 ? -25 : 0;
 
       TextPainter(
         text: TextSpan(text: feature, style: featuresTextStyle),
+        textAlign: TextAlign.center,
         textDirection: TextDirection.ltr,
       )
         ..layout(minWidth: 0, maxWidth: size.width)
@@ -110,7 +111,7 @@ class RadarChartPainter extends CustomPainter {
 
     data.asMap().forEach((index, graph) {
       var graphPaint = Paint()
-        ..color = graphColors[index % graphColors.length].withOpacity(0.4)
+        ..color = graphColors[index % graphColors.length].withOpacity(0.3)
         ..style = PaintingStyle.fill;
 
       var graphOutlinePaint = Paint()
