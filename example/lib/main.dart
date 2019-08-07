@@ -21,10 +21,10 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const ticks = [10, 20, 30];
+    const ticks = [7, 14, 21, 28, 35];
     const features = ["AA", "BB", "CC", "DD", "EE", "FF", "GG", "HH"];
     const data = [
-      [10, 20, 28, 5, 8, 15, 17, 6]
+      [10, 20, 28, 5, 16, 15, 17, 6]
     ];
 
     return Scaffold(

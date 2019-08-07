@@ -70,9 +70,10 @@ class RadarChartPainter extends CustomPainter {
     canvas.drawCircle(centerOffset, radius, polarPaint);
 
     // Painting the circles and labels for the given ticks (could be auto-generated)
-    var tickDistance = radius / (ticks.length + 1);
+    // The last tick is ignored, since it overlaps with the feature label
+    var tickDistance = radius / (ticks.length);
 
-    ticks.asMap().forEach((index, tick) {
+    ticks.sublist(0, ticks.length - 1).asMap().forEach((index, tick) {
       var tickRadius = tickDistance * (index + 1);
 
       canvas.drawCircle(centerOffset, tickRadius, ticksPaint);
