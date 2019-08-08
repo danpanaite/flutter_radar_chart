@@ -16,8 +16,15 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   const MyHomePage({Key key}) : super(key: key);
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  bool darkMode = false;
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +39,49 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Radar Chart Example'),
       ),
-      body: Center(
-        child: RadarChart.light(
-          ticks: ticks,
-          features: features,
-          data: data,
+      body: Container(
+        color: darkMode ? Colors.black : Colors.white,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                darkMode
+                    ? Text(
+                        'Light mode',
+                        style: TextStyle(color: Colors.white),
+                      )
+                    : Text(
+                        'Dark mode',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                Switch(
+                  value: this.darkMode,
+                  onChanged: (value) {
+                    setState(() {
+                      darkMode = value;
+                    });
+                  },
+                ),
+              ],
+            ),
+            Expanded(
+              child: darkMode
+                  ? RadarChart.dark(
+                      ticks: ticks,
+                      features: features,
+                      data: data,
+                      reverseAxis: true,
+                    )
+                  : RadarChart.light(
+                      ticks: ticks,
+                      features: features,
+                      data: data,
+                      reverseAxis: true,
+                    ),
+            ),
+          ],
         ),
       ),
     );

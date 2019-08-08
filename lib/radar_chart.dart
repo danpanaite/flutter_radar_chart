@@ -28,14 +28,33 @@ class RadarChart extends StatelessWidget {
   }) : super(key: key);
 
   factory RadarChart.light({
-    List<int> ticks,
-    List<String> features,
-    List<List<int>> data,
+    @required List<int> ticks,
+    @required List<String> features,
+    @required List<List<int>> data,
+    bool reverseAxis = false,
   }) {
     return RadarChart(
       ticks: ticks,
       features: features,
       data: data,
+      reverseAxis: reverseAxis,
+    );
+  }
+
+  factory RadarChart.dark({
+    @required List<int> ticks,
+    @required List<String> features,
+    @required List<List<int>> data,
+    bool reverseAxis = false,
+  }) {
+    return RadarChart(
+      ticks: ticks,
+      features: features,
+      data: data,
+      featuresTextStyle: const TextStyle(color: Colors.white, fontSize: 16),
+      outlineColor: Colors.white,
+      axisColor: Colors.grey,
+      reverseAxis: reverseAxis,
     );
   }
 
