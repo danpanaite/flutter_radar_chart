@@ -116,7 +116,7 @@ class RadarChartPainter extends CustomPainter {
     var scale = radius / ticks.last;
 
     // Painting the chart outline
-    var polarPaint = Paint()
+    var outlinePaint = Paint()
       ..color = outlineColor
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.0
@@ -128,7 +128,7 @@ class RadarChartPainter extends CustomPainter {
       ..strokeWidth = 1.0
       ..isAntiAlias = true;
 
-    canvas.drawCircle(centerOffset, radius, polarPaint);
+    canvas.drawCircle(centerOffset, radius, outlinePaint);
 
     // Painting the circles and labels for the given ticks (could be auto-generated)
     // The last tick is ignored, since it overlaps with the feature label
@@ -222,6 +222,6 @@ class RadarChartPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
-    return false;
+    return true;
   }
 }
