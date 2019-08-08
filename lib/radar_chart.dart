@@ -5,6 +5,13 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'dart:math' show pi, cos, sin;
 
+const defaultGraphColors = [
+  Colors.green,
+  Colors.blue,
+  Colors.red,
+  Colors.orange,
+];
+
 class RadarChart extends StatelessWidget {
   final List<int> ticks;
   final List<String> features;
@@ -14,6 +21,7 @@ class RadarChart extends StatelessWidget {
   final TextStyle featuresTextStyle;
   final Color outlineColor;
   final Color axisColor;
+  final List<Color> graphColors;
 
   const RadarChart({
     Key key,
@@ -25,6 +33,7 @@ class RadarChart extends StatelessWidget {
     this.featuresTextStyle = const TextStyle(color: Colors.black, fontSize: 16),
     this.outlineColor = Colors.black,
     this.axisColor = Colors.grey,
+    this.graphColors = defaultGraphColors,
   }) : super(key: key);
 
   factory RadarChart.light({
@@ -63,15 +72,15 @@ class RadarChart extends StatelessWidget {
     return CustomPaint(
       size: Size(double.infinity, double.infinity),
       painter: RadarChartPainter(
-        ticks,
-        features,
-        data,
-        reverseAxis,
-        ticksTextStyle,
-        featuresTextStyle,
-        outlineColor,
-        axisColor,
-      ),
+          ticks,
+          features,
+          data,
+          reverseAxis,
+          ticksTextStyle,
+          featuresTextStyle,
+          outlineColor,
+          axisColor,
+          graphColors),
     );
   }
 }
@@ -85,19 +94,18 @@ class RadarChartPainter extends CustomPainter {
   final TextStyle featuresTextStyle;
   final Color outlineColor;
   final Color axisColor;
+  final List<Color> graphColors;
 
   RadarChartPainter(
-    this.ticks,
-    this.features,
-    this.data,
-    this.reverseAxis,
-    this.ticksTextStyle,
-    this.featuresTextStyle,
-    this.outlineColor,
-    this.axisColor,
-  );
-
-  var graphColors = [Colors.green, Colors.blue, Colors.red, Colors.orange];
+      this.ticks,
+      this.features,
+      this.data,
+      this.reverseAxis,
+      this.ticksTextStyle,
+      this.featuresTextStyle,
+      this.outlineColor,
+      this.axisColor,
+      this.graphColors);
 
   @override
   void paint(Canvas canvas, Size size) {
