@@ -33,11 +33,10 @@ class MyHomePage extends StatelessWidget {
         title: Text('Radar Chart Example'),
       ),
       body: Center(
-        child: RadarChart(
+        child: RadarChart.light(
           ticks: ticks,
           features: features,
           data: data,
-          reverseAxis: true,
         ),
       ),
     );

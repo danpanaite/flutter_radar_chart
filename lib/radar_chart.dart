@@ -27,6 +27,18 @@ class RadarChart extends StatelessWidget {
     this.axisColor = Colors.grey,
   }) : super(key: key);
 
+  factory RadarChart.light({
+    List<int> ticks,
+    List<String> features,
+    List<List<int>> data,
+  }) {
+    return RadarChart(
+      ticks: ticks,
+      features: features,
+      data: data,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
@@ -106,7 +118,8 @@ class RadarChartPainter extends CustomPainter {
         textDirection: TextDirection.ltr,
       )
         ..layout(minWidth: 0, maxWidth: size.width)
-        ..paint(canvas, Offset(centerX, centerY - tickRadius - ticksTextStyle.fontSize));
+        ..paint(canvas,
+            Offset(centerX, centerY - tickRadius - ticksTextStyle.fontSize));
     });
 
     // Painting the axis for each given feature
