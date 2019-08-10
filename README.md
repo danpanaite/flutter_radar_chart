@@ -1,4 +1,4 @@
-# radar_chart
+# flutter_radar_chart
 
 Radar chart for Flutter inspired by The Python Graph Gallery (https://python-graph-gallery.com/radar-chart/).
 

@@ -20,7 +20,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  radar_chart:
+  flutter_radar_chart:
     path: ../
 
   # The following adds the Cupertino Icons font to your application.

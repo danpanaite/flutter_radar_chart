@@ -1,8 +1,8 @@
-name: radar_chart
+name: flutter_radar_chart
 description: Basic radar chart for Flutter.
 version: 0.0.1
-author:
-homepage:
+author: Dan Panaite <dan.panaite@live.ca>
+homepage: https://github.com/danpanaite/flutter_radar_chart
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
