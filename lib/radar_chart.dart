@@ -12,7 +12,7 @@ const defaultGraphColors = [
   Colors.orange,
 ];
 
-class RadarChart extends StatelessWidget {
+class RadarChart extends StatefulWidget {
   final List<int> ticks;
   final List<String> features;
   final List<List<int>> data;
@@ -68,19 +68,45 @@ class RadarChart extends StatelessWidget {
   }
 
   @override
+  _RadarChartState createState() => _RadarChartState();
+}
+
+class _RadarChartState extends State<RadarChart>
+    with SingleTickerProviderStateMixin {
+  double fraction;
+  Animation<double> animation;
+
+  @override
+  void initState() {
+    super.initState();
+    var controller = AnimationController(
+        duration: Duration(milliseconds: 1000), vsync: this);
+
+    animation = Tween(begin: 0.0, end: 1.0).animate(controller)
+      ..addListener(() {
+        setState(() {
+          fraction = animation.value;
+        });
+      });
+
+    controller.forward();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return CustomPaint(
       size: Size(double.infinity, double.infinity),
       painter: RadarChartPainter(
-          ticks,
-          features,
-          data,
-          reverseAxis,
-          ticksTextStyle,
-          featuresTextStyle,
-          outlineColor,
-          axisColor,
-          graphColors),
+          widget.ticks,
+          widget.features,
+          widget.data,
+          widget.reverseAxis,
+          widget.ticksTextStyle,
+          widget.featuresTextStyle,
+          widget.outlineColor,
+          widget.axisColor,
+          widget.graphColors,
+          this.fraction),
     );
   }
 }
@@ -95,6 +121,7 @@ class RadarChartPainter extends CustomPainter {
   final Color outlineColor;
   final Color axisColor;
   final List<Color> graphColors;
+  final double fraction;
 
   RadarChartPainter(
       this.ticks,
@@ -105,7 +132,8 @@ class RadarChartPainter extends CustomPainter {
       this.featuresTextStyle,
       this.outlineColor,
       this.axisColor,
-      this.graphColors);
+      this.graphColors,
+      this.fraction);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -189,11 +217,11 @@ class RadarChartPainter extends CustomPainter {
         ..isAntiAlias = true;
 
       // Start the graph on the initial point
-      var scaledPoint = scale * graph[0];
+      var scaledPoint = scale * graph[0] * fraction;
       var path = Path();
 
       if (reverseAxis) {
-        path.moveTo(centerX, centerY - (radius - scaledPoint));
+        path.moveTo(centerX, centerY - (radius * fraction - scaledPoint));
       } else {
         path.moveTo(centerX, centerY - scaledPoint);
       }
@@ -203,11 +231,11 @@ class RadarChartPainter extends CustomPainter {
 
         var xAngle = cos(angle * index - pi / 2);
         var yAngle = sin(angle * index - pi / 2);
-        var scaledPoint = scale * point;
+        var scaledPoint = scale * point * fraction;
 
         if (reverseAxis) {
-          path.lineTo(centerX + (radius - scaledPoint) * xAngle,
-              centerY + (radius - scaledPoint) * yAngle);
+          path.lineTo(centerX + (radius * fraction - scaledPoint) * xAngle,
+              centerY + (radius * fraction - scaledPoint) * yAngle);
         } else {
           path.lineTo(
               centerX + scaledPoint * xAngle, centerY + scaledPoint * yAngle);
@@ -221,7 +249,7 @@ class RadarChartPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
+  bool shouldRepaint(RadarChartPainter oldDelegate) {
+    return oldDelegate.fraction != fraction;
   }
 }
