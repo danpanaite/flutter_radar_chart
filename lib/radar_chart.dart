@@ -1,4 +1,4 @@
-library radar_chart;
+library flutter_radar_chart;
 
 import 'dart:ui';
 
