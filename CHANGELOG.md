@@ -1,3 +1,7 @@
+## [0.1.0] - 2019-08-10
+
+* Adding basic animation on widget update.
+
 ## [0.0.2] - 2019-08-10
 
 * Adding the information needed for publishing the package.

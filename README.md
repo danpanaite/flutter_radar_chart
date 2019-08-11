@@ -26,12 +26,19 @@ RadarChart.light(
 ```
 A full example (as seen in the screenshots) can be found in example/lib/main.dart
 
+# Animations!
+
+WIP, but trying to add some life to the chart. Animation is currently triggered whenever the widget is updated (`didUpdateWidget`). Screenshot was captured with an emulator, so the animation is a bit janky.
+
+![screenshot](example/screenshots/animation.gif)
+
 # Future Work Ideas
 
 There's a few more areas of work that I'd love to get around to building. I will eventually move these items over to issues for better tracking.
 
 - [ ] Option for round corners
-- [ ] Animations on render
+- [x] Animations on render
+- [ ] Integration testing
 - [ ] Responsive design
 - [ ] Legends
 
