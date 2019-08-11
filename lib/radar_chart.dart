@@ -75,21 +75,33 @@ class _RadarChartState extends State<RadarChart>
     with SingleTickerProviderStateMixin {
   double fraction;
   Animation<double> animation;
+  AnimationController animationController;
 
   @override
   void initState() {
     super.initState();
-    var controller = AnimationController(
+    animationController = AnimationController(
         duration: Duration(milliseconds: 1000), vsync: this);
 
-    animation = Tween(begin: 0.0, end: 1.0).animate(controller)
+    animation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+      curve: Curves.fastOutSlowIn,
+      parent: animationController,
+    ))
       ..addListener(() {
         setState(() {
           fraction = animation.value;
         });
       });
 
-    controller.forward();
+    animationController.forward();
+  }
+
+  @override
+  void didUpdateWidget(RadarChart oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    animationController.reset();
+    animationController.forward();
   }
 
   @override
