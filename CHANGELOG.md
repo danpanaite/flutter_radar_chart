@@ -1,3 +1,7 @@
+## [0.1.1] - 2019-08-10
+
+* Updating the example to showcase the flexibility of the chart.
+
 ## [0.1.0] - 2019-08-10
 
 * Adding basic animation on widget update.

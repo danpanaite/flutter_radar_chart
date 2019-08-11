@@ -1,13 +1,12 @@
 # flutter_radar_chart
 
-Radar chart for Flutter inspired by The Python Graph Gallery (https://python-graph-gallery.com/radar-chart/).
+Animated radar chart for Flutter inspired by The Python Graph Gallery (https://python-graph-gallery.com/radar-chart/).
 
 Follow the instructions on pub to install this package.
 
 ## Example
 
-![screenshot](example/screenshots/light_mode_small.jpg)
-![screenshot](example/screenshots/dark_mode_small.jpg)
+![screenshot](example/screenshots/example_small.gif)
 
 # Usage
 
@@ -26,11 +25,16 @@ RadarChart.light(
 ```
 A full example (as seen in the screenshots) can be found in example/lib/main.dart
 
-# Animations!
+# Customizability
 
-WIP, but trying to add some life to the chart. Animation is currently triggered whenever the widget is updated (`didUpdateWidget`). Screenshot was captured with an emulator, so the animation is a bit janky.
+Most of the customizability of the graph is a work in progress, but here's some of the features of the chart:
 
-![screenshot](example/screenshots/animation.gif)
+* **Animations!** Trying to add some life to the chart. Animation is currently triggered whenever the widget is updated (`didUpdateWidget`). Animations are currently enabled by default.
+* **Number of features:** As shown in the example, the radar chart will adjust to the number of given variables. More work is needed to ensure the chart doesn't explode when given invalid data.
+* **Reverse axis:** Reverses the axis range so that the min value starts at the graph outline.
+* **Dark mode:** Simple factory that showcases the color customizability of the chart.
+
+![screenshot](example/screenshots/dark_mode_small.jpg)
 
 # Future Work Ideas
 
