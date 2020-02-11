@@ -1,3 +1,6 @@
+## [0.1.3] - 2020-02-10
+* Minor bug fixes
+
 ## [0.1.2] - 2019-08-25
 * The position of feature labels are now properly adjust based on the number of characters.
 

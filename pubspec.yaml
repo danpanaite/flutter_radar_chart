@@ -1,7 +1,6 @@
 name: flutter_radar_chart
 description: Basic radar chart for Flutter. This chart is intended to work out of the box, adjusting itself to the given data. The design of the chart was inspired by the Python Graph Gallery.
-version: 0.1.2
-author: Dan Panaite <dan.panaite@live.ca>
+version: 0.1.3
 homepage: https://github.com/danpanaite/flutter_radar_chart
 
 environment:
