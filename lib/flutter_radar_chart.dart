@@ -1,6 +1,7 @@
 library flutter_radar_chart;
 
 import 'dart:ui';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'dart:math' show pi, cos, sin;
@@ -149,11 +150,11 @@ class RadarChartPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    var centerX = size.width / 2.0;
-    var centerY = size.height / 2.0;
-    var centerOffset = Offset(centerX, centerY);
-    var radius = centerX * 0.8;
-    var scale = radius / ticks.last;
+    final centerX = size.width / 2.0;
+    final centerY = size.height / 2.0;
+    final centerOffset = Offset(centerX, centerY);
+    final radius = math.min(centerX, centerY) * 0.8;
+    final scale = radius / ticks.last;
 
     // Painting the chart outline
     var outlinePaint = Paint()
