@@ -74,7 +74,7 @@ class RadarChart extends StatefulWidget {
 
 class _RadarChartState extends State<RadarChart>
     with SingleTickerProviderStateMixin {
-  double fraction;
+  double fraction = 0;
   Animation<double> animation;
   AnimationController animationController;
 
