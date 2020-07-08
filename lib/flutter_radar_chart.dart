@@ -122,6 +122,12 @@ class _RadarChartState extends State<RadarChart>
           this.fraction),
     );
   }
+
+  @override
+  void  dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
 }
 
 class RadarChartPainter extends CustomPainter {
