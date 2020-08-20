@@ -124,7 +124,7 @@ class _RadarChartState extends State<RadarChart>
   }
 
   @override
-  void  dispose() {
+  void dispose() {
     animationController.dispose();
     super.dispose();
   }
@@ -182,17 +182,20 @@ class RadarChartPainter extends CustomPainter {
     var tickDistance = radius / (ticks.length);
     var tickLabels = reverseAxis ? ticks.reversed.toList() : ticks;
 
-    if(reverseAxis) {
+    if (reverseAxis) {
       TextPainter(
         text: TextSpan(text: tickLabels[0].toString(), style: ticksTextStyle),
         textDirection: TextDirection.ltr,
       )
         ..layout(minWidth: 0, maxWidth: size.width)
-        ..paint(canvas,
-            Offset(centerX, centerY - ticksTextStyle.fontSize));
+        ..paint(canvas, Offset(centerX, centerY - ticksTextStyle.fontSize));
     }
 
-    tickLabels.sublist(reverseAxis ? 1 : 0,reverseAxis ? ticks.length : ticks.length - 1).asMap().forEach((index, tick) {
+    tickLabels
+        .sublist(
+            reverseAxis ? 1 : 0, reverseAxis ? ticks.length : ticks.length - 1)
+        .asMap()
+        .forEach((index, tick) {
       var tickRadius = tickDistance * (index + 1);
 
       canvas.drawCircle(centerOffset, tickRadius, ticksPaint);

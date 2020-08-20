@@ -37,7 +37,9 @@ class _MyHomePageState extends State<MyHomePage> {
     ];
 
     features = features.sublist(0, numberOfFeatures.floor());
-    data = data.map((graph) => graph.sublist(0, numberOfFeatures.floor())).toList();
+    data = data
+        .map((graph) => graph.sublist(0, numberOfFeatures.floor()))
+        .toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -49,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal : 8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -74,13 +76,14 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal : 8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   Text(
                     'Number of features',
-                    style: TextStyle(color: darkMode ? Colors.white : Colors.black),
+                    style: TextStyle(
+                        color: darkMode ? Colors.white : Colors.black),
                   ),
                   Expanded(
                     child: Slider(
