@@ -23,6 +23,7 @@ class RadarChart extends StatefulWidget {
   final Color outlineColor;
   final Color axisColor;
   final List<Color> graphColors;
+  final int sides;
 
   const RadarChart({
     Key key,
@@ -35,6 +36,7 @@ class RadarChart extends StatefulWidget {
     this.outlineColor = Colors.black,
     this.axisColor = Colors.grey,
     this.graphColors = defaultGraphColors,
+    this.sides = 0,
   }) : super(key: key);
 
   factory RadarChart.light({
@@ -119,6 +121,7 @@ class _RadarChartState extends State<RadarChart>
           widget.outlineColor,
           widget.axisColor,
           widget.graphColors,
+          widget.sides,
           this.fraction),
     );
   }
@@ -140,19 +143,51 @@ class RadarChartPainter extends CustomPainter {
   final Color outlineColor;
   final Color axisColor;
   final List<Color> graphColors;
+  final int sides;
   final double fraction;
 
   RadarChartPainter(
-      this.ticks,
-      this.features,
-      this.data,
-      this.reverseAxis,
-      this.ticksTextStyle,
-      this.featuresTextStyle,
-      this.outlineColor,
-      this.axisColor,
-      this.graphColors,
-      this.fraction);
+    this.ticks,
+    this.features,
+    this.data,
+    this.reverseAxis,
+    this.ticksTextStyle,
+    this.featuresTextStyle,
+    this.outlineColor,
+    this.axisColor,
+    this.graphColors,
+    this.sides,
+    this.fraction,
+  );
+
+  Path variablePath(Size size, double radius, int sides) {
+    var path = Path();
+    var angle = (math.pi * 2) / sides;
+
+    Offset center = Offset(size.width / 2, size.height / 2);
+
+    if (sides < 3) {
+      // Draw a circle
+      path.addOval(Rect.fromCircle(
+        center: Offset(size.width / 2, size.height / 2),
+        radius: radius,
+      ));
+    } else {
+      // Draw a polygon
+      Offset startPoint =
+          Offset(radius * math.cos(0.0), radius * math.sin(0.0));
+
+      path.moveTo(startPoint.dx + center.dx, startPoint.dy + center.dy);
+
+      for (int i = 1; i <= sides; i++) {
+        double x = radius * math.cos(angle * i) + center.dx;
+        double y = radius * math.sin(angle * i) + center.dy;
+        path.lineTo(x, y);
+      }
+      path.close();
+    }
+    return path;
+  }
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -175,8 +210,7 @@ class RadarChartPainter extends CustomPainter {
       ..strokeWidth = 1.0
       ..isAntiAlias = true;
 
-    canvas.drawCircle(centerOffset, radius, outlinePaint);
-
+    canvas.drawPath(variablePath(size, radius, this.sides), outlinePaint);
     // Painting the circles and labels for the given ticks (could be auto-generated)
     // The last tick is ignored, since it overlaps with the feature label
     var tickDistance = radius / (ticks.length);
@@ -198,7 +232,7 @@ class RadarChartPainter extends CustomPainter {
         .forEach((index, tick) {
       var tickRadius = tickDistance * (index + 1);
 
-      canvas.drawCircle(centerOffset, tickRadius, ticksPaint);
+      canvas.drawPath(variablePath(size, tickRadius, this.sides), ticksPaint);
 
       TextPainter(
         text: TextSpan(text: tick.toString(), style: ticksTextStyle),
