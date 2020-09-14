@@ -44,13 +44,14 @@ class RadarChart extends StatefulWidget {
     @required List<String> features,
     @required List<List<int>> data,
     bool reverseAxis = false,
+    bool useSides = false,
   }) {
     return RadarChart(
-      ticks: ticks,
-      features: features,
-      data: data,
-      reverseAxis: reverseAxis,
-    );
+        ticks: ticks,
+        features: features,
+        data: data,
+        reverseAxis: reverseAxis,
+        sides: useSides ? features.length : 0);
   }
 
   factory RadarChart.dark({
@@ -58,16 +59,17 @@ class RadarChart extends StatefulWidget {
     @required List<String> features,
     @required List<List<int>> data,
     bool reverseAxis = false,
+    bool useSides = false,
   }) {
     return RadarChart(
-      ticks: ticks,
-      features: features,
-      data: data,
-      featuresTextStyle: const TextStyle(color: Colors.white, fontSize: 16),
-      outlineColor: Colors.white,
-      axisColor: Colors.grey,
-      reverseAxis: reverseAxis,
-    );
+        ticks: ticks,
+        features: features,
+        data: data,
+        featuresTextStyle: const TextStyle(color: Colors.white, fontSize: 16),
+        outlineColor: Colors.white,
+        axisColor: Colors.grey,
+        reverseAxis: reverseAxis,
+        sides: useSides ? features.length : 0);
   }
 
   @override
@@ -174,14 +176,13 @@ class RadarChartPainter extends CustomPainter {
       ));
     } else {
       // Draw a polygon
-      Offset startPoint =
-          Offset(radius * math.cos(0.0), radius * math.sin(0.0));
+      Offset startPoint = Offset(radius * cos(-pi / 2), radius * sin(-pi / 2));
 
       path.moveTo(startPoint.dx + center.dx, startPoint.dy + center.dy);
 
       for (int i = 1; i <= sides; i++) {
-        double x = radius * math.cos(angle * i) + center.dx;
-        double y = radius * math.sin(angle * i) + center.dy;
+        double x = radius * cos(angle * i - pi / 2) + center.dx;
+        double y = radius * sin(angle * i - pi / 2) + center.dy;
         path.lineTo(x, y);
       }
       path.close();
