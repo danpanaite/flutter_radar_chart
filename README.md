@@ -33,6 +33,7 @@ Most of the customizability of the graph is a work in progress, but here's some 
 * **Number of features:** As shown in the example, the radar chart will adjust to the number of given variables. More work is needed to ensure the chart doesn't explode when given invalid data.
 * **Reverse axis:** Reverses the axis range so that the min value starts at the graph outline.
 * **Dark mode:** Simple factory that showcases the color customizability of the chart.
+* **Polygon sides:** Ability to use flat polygon borders instead of a circular border.
 
 ![screenshot](example/screenshots/dark_mode_small.jpg)
 

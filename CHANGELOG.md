@@ -1,3 +1,6 @@
+## [0.1.6] - 2020-09-15
+* Polygon border support
+
 ## [0.1.5] - 2020-08-20
 * Fixing dart formatting
 
