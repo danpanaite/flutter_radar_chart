@@ -25,6 +25,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   bool darkMode = false;
+  bool useSides = false;
   double numberOfFeatures = 3;
 
   @override
@@ -78,6 +79,35 @@ class _MyHomePageState extends State<MyHomePage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  useSides
+                      ? Text(
+                          'Polygon border',
+                          style: darkMode
+                              ? TextStyle(color: Colors.white)
+                              : TextStyle(color: Colors.black),
+                        )
+                      : Text(
+                          'Circular border',
+                          style: darkMode
+                              ? TextStyle(color: Colors.white)
+                              : TextStyle(color: Colors.black),
+                        ),
+                  Switch(
+                    value: this.useSides,
+                    onChanged: (value) {
+                      setState(() {
+                        useSides = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   Text(
@@ -108,12 +138,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       features: features,
                       data: data,
                       reverseAxis: true,
+                      useSides: useSides,
                     )
                   : RadarChart.light(
                       ticks: ticks,
                       features: features,
                       data: data,
                       reverseAxis: true,
+                      useSides: useSides,
                     ),
             ),
           ],
