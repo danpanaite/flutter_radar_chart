@@ -26,10 +26,10 @@ class RadarChart extends StatefulWidget {
   final int sides;
 
   const RadarChart({
-    Key key,
-    @required this.ticks,
-    @required this.features,
-    @required this.data,
+    Key? key,
+    required this.ticks,
+    required this.features,
+    required this.data,
     this.reverseAxis = false,
     this.ticksTextStyle = const TextStyle(color: Colors.grey, fontSize: 12),
     this.featuresTextStyle = const TextStyle(color: Colors.black, fontSize: 16),
@@ -40,9 +40,9 @@ class RadarChart extends StatefulWidget {
   }) : super(key: key);
 
   factory RadarChart.light({
-    @required List<int> ticks,
-    @required List<String> features,
-    @required List<List<int>> data,
+    required List<int> ticks,
+    required List<String> features,
+    required List<List<int>> data,
     bool reverseAxis = false,
     bool useSides = false,
   }) {
@@ -55,9 +55,9 @@ class RadarChart extends StatefulWidget {
   }
 
   factory RadarChart.dark({
-    @required List<int> ticks,
-    @required List<String> features,
-    @required List<List<int>> data,
+    required List<int> ticks,
+    required List<String> features,
+    required List<List<int>> data,
     bool reverseAxis = false,
     bool useSides = false,
   }) {
@@ -79,8 +79,8 @@ class RadarChart extends StatefulWidget {
 class _RadarChartState extends State<RadarChart>
     with SingleTickerProviderStateMixin {
   double fraction = 0;
-  Animation<double> animation;
-  AnimationController animationController;
+  Animation<double>? animation;
+  AnimationController? animationController;
 
   @override
   void initState() {
@@ -90,23 +90,23 @@ class _RadarChartState extends State<RadarChart>
 
     animation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
       curve: Curves.fastOutSlowIn,
-      parent: animationController,
+      parent: animationController!,
     ))
       ..addListener(() {
         setState(() {
-          fraction = animation.value;
+          fraction = animation!.value;
         });
       });
 
-    animationController.forward();
+    animationController!.forward();
   }
 
   @override
   void didUpdateWidget(RadarChart oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    animationController.reset();
-    animationController.forward();
+    animationController!.reset();
+    animationController!.forward();
   }
 
   @override
@@ -130,7 +130,7 @@ class _RadarChartState extends State<RadarChart>
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     super.dispose();
   }
 }
@@ -223,7 +223,7 @@ class RadarChartPainter extends CustomPainter {
         textDirection: TextDirection.ltr,
       )
         ..layout(minWidth: 0, maxWidth: size.width)
-        ..paint(canvas, Offset(centerX, centerY - ticksTextStyle.fontSize));
+        ..paint(canvas, Offset(centerX, centerY - ticksTextStyle.fontSize!));
     }
 
     tickLabels
@@ -241,7 +241,7 @@ class RadarChartPainter extends CustomPainter {
       )
         ..layout(minWidth: 0, maxWidth: size.width)
         ..paint(canvas,
-            Offset(centerX, centerY - tickRadius - ticksTextStyle.fontSize));
+            Offset(centerX, centerY - tickRadius - ticksTextStyle.fontSize!));
     });
 
     // Painting the axis for each given feature
@@ -257,8 +257,8 @@ class RadarChartPainter extends CustomPainter {
       canvas.drawLine(centerOffset, featureOffset, ticksPaint);
 
       var featureLabelFontHeight = featuresTextStyle.fontSize;
-      var featureLabelFontWidth = featuresTextStyle.fontSize - 5;
-      var labelYOffset = yAngle < 0 ? -featureLabelFontHeight : 0;
+      var featureLabelFontWidth = featuresTextStyle.fontSize! - 5;
+      var labelYOffset = yAngle < 0 ? -featureLabelFontHeight! : 0;
       var labelXOffset =
           xAngle < 0 ? -featureLabelFontWidth * feature.length : 0;
 
