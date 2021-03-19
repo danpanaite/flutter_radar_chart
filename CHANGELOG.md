@@ -1,3 +1,6 @@
+## [0.2.0] - 2021-03-18
+* Supporting Flutter 2.0 and null safety
+
 ## [0.1.6] - 2020-09-15
 * Polygon border support
 
