@@ -1,3 +1,6 @@
+## [0.2.1] - 2022-02-19
+* Adjusting feature labels and support double/float data points
+
 ## [0.2.0] - 2021-03-18
 * Supporting Flutter 2.0 and null safety
 
