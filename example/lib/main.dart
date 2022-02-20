@@ -33,8 +33,8 @@ class _MyHomePageState extends State<MyHomePage> {
     const ticks = [7, 14, 21, 28, 35];
     var features = ["AA", "BB", "CC", "DD", "EE", "FF", "GG", "HH"];
     var data = [
-      [10, 20, 28, 5, 16, 15, 17, 6],
-      [15, 1, 4, 14, 23, 10, 6, 19]
+      [10.0, 20, 28, 5, 16, 15, 17, 6],
+      [14.5, 1, 4, 14, 23, 10, 6, 19]
     ];
 
     features = features.sublist(0, numberOfFeatures.floor());

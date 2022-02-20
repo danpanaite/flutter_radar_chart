@@ -16,7 +16,7 @@ const defaultGraphColors = [
 class RadarChart extends StatefulWidget {
   final List<int> ticks;
   final List<String> features;
-  final List<List<int>> data;
+  final List<List<num>> data;
   final bool reverseAxis;
   final TextStyle ticksTextStyle;
   final TextStyle featuresTextStyle;
@@ -42,7 +42,7 @@ class RadarChart extends StatefulWidget {
   factory RadarChart.light({
     required List<int> ticks,
     required List<String> features,
-    required List<List<int>> data,
+    required List<List<num>> data,
     bool reverseAxis = false,
     bool useSides = false,
   }) {
@@ -57,7 +57,7 @@ class RadarChart extends StatefulWidget {
   factory RadarChart.dark({
     required List<int> ticks,
     required List<String> features,
-    required List<List<int>> data,
+    required List<List<num>> data,
     bool reverseAxis = false,
     bool useSides = false,
   }) {
@@ -138,7 +138,7 @@ class _RadarChartState extends State<RadarChart>
 class RadarChartPainter extends CustomPainter {
   final List<int> ticks;
   final List<String> features;
-  final List<List<int>> data;
+  final List<List<num>> data;
   final bool reverseAxis;
   final TextStyle ticksTextStyle;
   final TextStyle featuresTextStyle;
