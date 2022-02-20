@@ -257,21 +257,16 @@ class RadarChartPainter extends CustomPainter {
       canvas.drawLine(centerOffset, featureOffset, ticksPaint);
 
       var featureLabelFontHeight = featuresTextStyle.fontSize;
-      var featureLabelFontWidth = featuresTextStyle.fontSize! - 5;
       var labelYOffset = yAngle < 0 ? -featureLabelFontHeight! : 0;
-      var labelXOffset =
-          xAngle < 0 ? -featureLabelFontWidth * feature.length : 0;
+      var labelXOffset = xAngle > 0 ? featureOffset.dx : 0.0;
 
       TextPainter(
         text: TextSpan(text: feature, style: featuresTextStyle),
-        textAlign: TextAlign.left,
+        textAlign: xAngle < 0 ? TextAlign.right : TextAlign.left,
         textDirection: TextDirection.ltr,
       )
-        ..layout(minWidth: 0, maxWidth: size.width)
-        ..paint(
-            canvas,
-            Offset(featureOffset.dx + labelXOffset,
-                featureOffset.dy + labelYOffset));
+        ..layout(minWidth: featureOffset.dx)
+        ..paint(canvas, Offset(labelXOffset, featureOffset.dy + labelYOffset));
     });
 
     // Painting each graph
